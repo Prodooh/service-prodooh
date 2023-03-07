@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Fruitcake\Cors\CorsService;
-use GuyWarner\GoogleChatAlerts\Facades\GoogleChatAlert;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -62,11 +61,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e): Response
     {
-        GoogleChatAlert::to('default')->message(json_encode([
-            "error" => $e->getMessage(),
-            "route" => $e->getFile(),
-            "line" => $e->getLine()
-        ]));
+        // GoogleChatAlert::to('default')->message(json_encode([
+        //     "error" => $e->getMessage(),
+        //     "route" => $e->getFile(),
+        //     "line" => $e->getLine()
+        // ]));
         $response = $this->handleException($request, $e);
         app(CorsService::class)->addActualRequestHeaders($response, $request);
         return $response;

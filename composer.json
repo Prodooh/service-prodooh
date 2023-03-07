@@ -7,10 +7,8 @@
     "require": {
         "php": "^8.1",
         "doctrine/dbal": "^3.5",
-        "guywarner/laravel-google-chat-alerts": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel-notification-channels/google-chat": "^3.0",
-        "laravel/framework": "^9.19",
+        "laravel/framework": "^10.2.0",
         "laravel/passport": "^11.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
@@ -23,10 +21,10 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.0",
         "rakutentech/laravel-request-docs": "^1.30",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -68,6 +66,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
