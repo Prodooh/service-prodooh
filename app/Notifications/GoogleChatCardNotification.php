@@ -19,7 +19,7 @@ class GoogleChatCardNotification extends Notification
 {
     use Queueable;
 
-    private GoogleChatSettings $googleChatProperties;
+    private  $googleChatProperties;
 
     public function __construct($googleChatProperties)
     {
@@ -36,10 +36,10 @@ class GoogleChatCardNotification extends Notification
     // Create a super simple message
     public function toGoogleChat($notifiable)
     {
-        dd('Estoy aqu');
+        /*
+        dd($this->googleChatProperties->googleChatSettings);
         $buttons = [];
-
-        if ($btns = $this->googleChatProperties->buttons) {
+        if ($btns = $this->googleChatProperties->googleChatSettings->buttons) {
             foreach ($btns as $btn) {
                 $buttons[] = TextButton::create(
                     $btn->url,
@@ -47,34 +47,24 @@ class GoogleChatCardNotification extends Notification
                 );
             }
         }
-
-        $images = [];
-
-        if ($btns = $this->googleChatProperties->buttons) {
-            foreach ($btns as $btn) {
-                $buttons[] = TextButton::create(
-                    $btn->url,
-                    $btn->name
-                );
-            }
-        }
-
+ */
+        ///dd($this->googleChatProperties->googleChatSettings->title);
         return GoogleChatMessage::create()
             ->text('An invoice was just paid... ')
             ->bold('Woo-hoo!')
             ->card(
                 Card::create()
                     ->header(
-                        $this->googleChatProperties->title,
-                        $this->googleChatProperties->color,
-                        $this->googleChatProperties->urlImg,
-                        $this->googleChatProperties->styleImage
+                        $this->googleChatProperties->googleChatSettings->title,
+                        $this->googleChatProperties->googleChatSettings->color,
+                        $this->googleChatProperties->googleChatSettings->urlImg,
+                        $this->googleChatProperties->googleChatSettings->styleImage
                     )
                     ->section(
                         Section::create(
                             [
-                                TextParagraph::create($this->googleChatProperties->message),
-                                Buttons::create($buttons),
+                                TextParagraph::create($this->googleChatProperties->googleChatSettings->message),
+
                                 Image::create(
                                     'https://www.panel.prodooh.com/assets/images/default/prodooh.png',
                                     'https://www.panel.prodooh.com'
@@ -87,6 +77,6 @@ class GoogleChatCardNotification extends Notification
                         )
                     )
             )
-            ->to($this->googleChatProperties->channel);
+            ->to($this->googleChatProperties->googleChatSettings->channel);
     }
 }

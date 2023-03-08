@@ -4,56 +4,56 @@ namespace App\Classes\GoogleChat;
 
 class GoogleChatBuilder {
 
-    private GoogleChatSettings $googleChatSettings;
+    public GoogleChatSettings $googleChatSettings;
 
     public function __construct()
     {
         $this->googleChatSettings = new GoogleChatSettings;
     }
 
-    public function setChannel($channel): static
+    public function setChannel($channel)
     {
         $this->googleChatSettings->channel = $channel;
         return $this;
     }
 
-    public function setTitle($title): static
+    public function setTitle($title)
     {
         $this->googleChatSettings->title = $title;
         return $this;
     }
 
-    public function setColor($color): static
+    public function setColor($color)
     {
         $this->googleChatSettings->color = $color;
         return $this;
     }
 
-    public function setImage($image): static
+    public function setImage($image)
     {
         $this->googleChatSettings->image = $image;
         return $this;
     }
 
-    public function setStyleImage($styleImage): static
+    public function setStyleImage($styleImage)
     {
         $this->googleChatSettings->styleImage = $styleImage;
         return $this;
     }
 
-    public function setMessage($message): static
+    public function setMessage($message)
     {
         $this->googleChatSettings->message = $message;
         return $this;
     }
 
-    public function setButtons($buttons): static
+    public function setButtons($buttons)
     {
         $this->googleChatSettings->buttons = $buttons;
         return $this;
     }
 
-    public function setImages($images): static
+    public function setImages($images)
     {
         $this->googleChatSettings->images = $images;
         return $this;
