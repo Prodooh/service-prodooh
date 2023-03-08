@@ -43,3 +43,5 @@ Route::namespace('App\Http\Controllers\Datatable')->group(function() {
     });
     Route::apiResource('users', UserController::class);
 });
+
+Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);

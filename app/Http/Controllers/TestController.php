@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Notifications\GoogleChatCardNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Notification;
 
 class TestController extends Controller
 {
     public function test()
     {
-        return __('messages.prueba');
+        Notification::send(null, new GoogleChatCardNotification(['channel' => 'develop']));
     }
-
 }
