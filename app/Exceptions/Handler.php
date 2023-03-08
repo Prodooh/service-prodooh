@@ -2,12 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Classes\GoogleChat\GoogleChatBuilder;
+use App\Notifications\GoogleChatCardNotification;
 use Fruitcake\Cors\CorsService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
@@ -61,11 +64,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e): Response
     {
-        // GoogleChatAlert::to('default')->message(json_encode([
-        //     "error" => $e->getMessage(),
-        //     "route" => $e->getFile(),
-        //     "line" => $e->getLine()
-        // ]));
+        $builder = (new GoogleChatBuilder)
+            ->title('Handler')
+            ->message(
+                json_encode([
+                    "error" => $e->getMessage(),
+                    "route" => $e->getFile(),
+                    "line" => $e->getLine()
+                ])
+            );
+
+        Notification::send(null, new GoogleChatCardNotification($builder));
+
         $response = $this->handleException($request, $e);
         app(CorsService::class)->addActualRequestHeaders($response, $request);
         return $response;
@@ -85,7 +95,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ModelNotFoundException) {
             $model = class_basename($exception->getModel());
-            return $this->errorResponse('There is no instance with the specified id, in the model: '.$model, 404);
+            return $this->errorResponse('There is no instance with the specified id, in the model: ' . $model, 404);
         }
 
         if ($exception instanceof AuthenticationException) {
@@ -126,7 +136,7 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param AuthenticationException $exception
      * @return JsonResponse
      */
