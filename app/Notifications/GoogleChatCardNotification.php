@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Classes\GoogleChat\GoogleChatBuilder;
 use App\Classes\GoogleChat\GoogleChatSettings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -19,13 +18,16 @@ class GoogleChatCardNotification extends Notification
 {
     use Queueable;
 
-    private  $googleChatProperties;
+    private GoogleChatSettings $googleChatProperties;
 
     public function __construct($googleChatProperties)
     {
-        $this->googleChatProperties = $googleChatProperties;
+        $this->googleChatProperties = $googleChatProperties->googleChatSettings;
     }
 
+    /**
+     * @return string[]
+     */
     public function via(): array
     {
         return [
@@ -33,50 +35,49 @@ class GoogleChatCardNotification extends Notification
         ];
     }
 
-    // Create a super simple message
-    public function toGoogleChat($notifiable)
+    /**
+     * @return GoogleChatMessage
+     */
+    public function toGoogleChat(): GoogleChatMessage
     {
-        /*
-        dd($this->googleChatProperties->googleChatSettings);
         $buttons = [];
-        if ($btns = $this->googleChatProperties->googleChatSettings->buttons) {
-            foreach ($btns as $btn) {
+
+        if (array_key_exists('buttons', (array) $this->googleChatProperties)) {
+            foreach ($this->googleChatProperties->buttons as $btn) {
                 $buttons[] = TextButton::create(
-                    $btn->url,
-                    $btn->name
+                    $btn['url'],
+                    $btn['name']
                 );
             }
         }
- */
-        ///dd($this->googleChatProperties->googleChatSettings->title);
+
+        $urlImage = 'https://api.prodooh.com/img/barra.jpg';
+        $link = null;
+
+        if (array_key_exists('image', (array) $this->googleChatProperties)) {
+            $urlImage = $this->googleChatProperties->image['url'];
+            $link = $this->googleChatProperties->image['link'];
+        }
+
         return GoogleChatMessage::create()
-            ->text('An invoice was just paid... ')
-            ->bold('Woo-hoo!')
             ->card(
                 Card::create()
                     ->header(
-                        $this->googleChatProperties->googleChatSettings->title,
-                        $this->googleChatProperties->googleChatSettings->color,
-                        $this->googleChatProperties->googleChatSettings->urlImg,
-                        $this->googleChatProperties->googleChatSettings->styleImage
+                        $this->googleChatProperties->title,
+                        $this->googleChatProperties->subtitle,
+                        $this->googleChatProperties->urlImg,
+                        $this->googleChatProperties->styleImage
                     )
                     ->section(
                         Section::create(
                             [
-                                TextParagraph::create($this->googleChatProperties->googleChatSettings->message),
-
-                                Image::create(
-                                    'https://www.panel.prodooh.com/assets/images/default/prodooh.png',
-                                    'https://www.panel.prodooh.com'
-                                ),
-                                Image::create(
-                                    'https://www.panel.prodooh.com/assets/images/default/prodooh.png',
-                                    'https://www.panel.prodooh.com'
-                                )
+                                TextParagraph::create($this->googleChatProperties->message),
+                                Buttons::create($buttons),
+                                Image::create($urlImage, $link)
                             ]
                         )
                     )
             )
-            ->to($this->googleChatProperties->googleChatSettings->channel);
+            ->to($this->googleChatProperties->channel);
     }
 }
