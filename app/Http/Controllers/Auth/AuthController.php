@@ -28,12 +28,13 @@ class AuthController extends AccessTokenController
         }
     }
 
+
     /**
-     * @return string
+     * @return JsonResponse
      */
-    public function logout(): string
+    public function logout(): JsonResponse
     {
         request()->user()->currentAccessToken()->revoke();
-        return 'ok';
+        return response()->json(['message' => 'ok']);
     }
 }

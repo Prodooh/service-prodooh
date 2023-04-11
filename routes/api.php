@@ -24,8 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('App\Http\Controllers\Auth')->group(function() {
     Route::prefix('auth')->name('auth.')->group(function() {
         Route::post('token', 'AuthController@token');
-        Route::post('password/changed', 'NewPasswordController')->middleware('auth:api');;
-        Route::get('logout', 'AuthController@logout')->middleware('auth:api');
+        Route::middleware('auth:api')->group(function () {
+            Route::post('password/changed', 'NewPasswordController');
+            Route::get('logout', 'AuthController@logout');
+        });
     });
 });
 
@@ -37,7 +39,8 @@ Route::namespace('App\Http\Controllers\User')->group(function() {
     });
 });
 
-Route::namespace('App\Http\Controllers\Datatable')->group(function() {
+/* DATATABLES */
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->group(function() {
     Route::prefix('datatables')->name('datatables.')->group(function() {
         Route::post('{type}', 'DatatableController')->name('getUsers');
     });
