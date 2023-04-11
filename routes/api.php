@@ -25,7 +25,7 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
     Route::prefix('auth')->name('auth.')->group(function() {
         Route::post('token', 'AuthController@token');
         Route::middleware('auth:api')->group(function () {
-            Route::post('password/changed', 'NewPasswordController');
+            Route::post('update-password', 'NewPasswordController');
             Route::get('logout', 'AuthController@logout');
         });
     });
