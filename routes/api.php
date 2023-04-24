@@ -34,7 +34,7 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 /* USERS */
 Route::namespace('App\Http\Controllers\User')->group(function() {
     Route::prefix('users')->name('users.')->group(function() {
-        Route::post('preference/{user}', 'UserController@updatePreference');
+        Route::post('preferences', 'UserController@updatePreferences');
         Route::post('/', 'UserController@getData')->name('getData');
     });
 });

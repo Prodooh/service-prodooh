@@ -35,13 +35,12 @@ class UserController extends BaseController
     }
 
     /**
-     * @param User $user
      * @return JsonResponse
      */
-    public function updatePreference(User $user): JsonResponse
+    public function updatePreferences(): JsonResponse
     {
-        $payload = ["payload" => array_merge($user->payload, request()->all())];
-        $user->update($payload);
+        $user = auth()->user();
+        $user->update(request('payload'));
         return $this->successMessage();
     }
 }
