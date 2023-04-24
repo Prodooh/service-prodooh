@@ -37,10 +37,12 @@ class UserController extends BaseController
     /**
      * @return JsonResponse
      */
-    public function updatePreferences(): JsonResponse
+    public function updatePreferences()
     {
         $user = auth()->user();
-        $user->update(request('payload'));
+        $user->update([
+            'payload' => request('payload')
+        ]);
         return $this->successMessage();
     }
 }
