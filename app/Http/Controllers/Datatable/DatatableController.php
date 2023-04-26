@@ -9,7 +9,6 @@ use App\Http\Controllers\BaseController;
 use App\Notifications\GoogleChatCardNotification;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Yajra\Datatables\Datatables;
 
