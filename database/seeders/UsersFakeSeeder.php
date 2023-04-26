@@ -18,6 +18,6 @@ class UsersFakeSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(150)->create();
+       // User::factory()->count(150)->create();
     }
 }
