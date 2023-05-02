@@ -28,7 +28,6 @@ class AuthController extends AccessTokenController
         }
     }
 
-
     /**
      * @return JsonResponse
      */

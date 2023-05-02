@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'set_language' => \App\Http\Middleware\SetLanguage::class,
         'changed.password' => \App\Http\Middleware\PasswordChanged::class,
+        'token_reset_password_validate' => \App\Http\Middleware\TokenResetPasswordValidation::class,
     ];
 }

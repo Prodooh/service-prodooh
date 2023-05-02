@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "doctrine/dbal": "^3.5",
+        "firebase/php-jwt": "^6.4",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-notification-channels/google-chat": "^3.1",
         "laravel/framework": "^10.2.0",
