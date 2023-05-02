@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'app_front' => env('APP_FRONT'),
+
+    'jwt_secret' => env('JWT_SECRET'),
+
 ];
