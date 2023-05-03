@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Country\CountryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,3 +49,5 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
 });
 
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
+
+Route::apiResource('countries', CountryController::class);

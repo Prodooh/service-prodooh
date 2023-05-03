@@ -45,4 +45,8 @@ class UserController extends BaseController
         ]);
         return $this->successMessage();
     }
+
+    public function store(){
+
+    }
 }
