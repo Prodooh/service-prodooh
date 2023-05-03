@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\BaseController;
 use App\Mail\UpdatePasswordConfirmation;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 
 class NewPasswordController extends BaseController
 {
-    public function __invoke(): \Illuminate\Http\JsonResponse
+    public function __invoke(): JsonResponse
     {
         request()->validate([
             'password' => ['required', 'string']
