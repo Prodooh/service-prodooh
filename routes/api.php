@@ -47,8 +47,9 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
     Route::prefix('datatables')->name('datatables.')->group(function() {
         Route::post('{type}', 'DatatableController')->name('getUsers');
     });
-    Route::apiResource('users', UserController::class);
 });
+
+Route::apiResource('users', UserController::class);
 
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
 
