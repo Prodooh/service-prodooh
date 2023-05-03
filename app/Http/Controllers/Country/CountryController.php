@@ -11,9 +11,9 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function search(Request $request)
     {
-        return Country::all();
+        return Country::whereRaw('unaccent(LOWER(name)) like \'%'. strtolower($request->word) . '%\'')->get();
     }
 
     /**

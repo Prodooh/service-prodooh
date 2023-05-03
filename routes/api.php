@@ -52,4 +52,7 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
 
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
 
+Route::prefix('countries')->namespace('App\Http\Controllers\Country')->group(function() {
+    Route::post('/search', 'CountryController@search')->name('search.country');
+});
 Route::apiResource('countries', CountryController::class);
