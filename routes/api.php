@@ -25,6 +25,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('App\Http\Controllers\Auth')->group(function() {
     Route::prefix('auth')->name('auth.')->group(function() {
         Route::post('token', 'AuthController@token');
+        Route::post('password/send-link', 'ResetPasswordController@sendResetLinkEmail');
+        Route::middleware('token_reset_password_validate')->post('password/reset', 'ResetPasswordController@resetPassword');
         Route::middleware('auth:api')->group(function () {
             Route::post('update-password', 'NewPasswordController');
             Route::get('logout', 'AuthController@logout');
