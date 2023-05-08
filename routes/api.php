@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Country\CountryController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +39,16 @@ Route::namespace('App\Http\Controllers\User')->group(function() {
         Route::post('preferences', 'UserController@updatePreferences');
         Route::post('/', 'UserController@getData')->name('getData');
     });
+    Route::apiResource('users', 'UserController');
+});
+
+/* COMPANIES */
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(function() {
+    Route::prefix('companies')->name('companies.')->group(function() {
+
+    });
+    Route::apiResource('companies', 'CompanyController')
+        ->only(['store']);
 });
 
 /* DATATABLES */
