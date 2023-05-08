@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +38,16 @@ Route::namespace('App\Http\Controllers\User')->group(function() {
         Route::post('preferences', 'UserController@updatePreferences');
         Route::post('/', 'UserController@getData')->name('getData');
     });
+    Route::apiResource('users', 'UserController');
+});
+
+/* COMPANIES */
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(function() {
+    Route::prefix('companies')->name('companies.')->group(function() {
+
+    });
+    Route::apiResource('companies', 'CompanyController')
+        ->only(['store']);
 });
 
 /* DATATABLES */
@@ -46,7 +55,6 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
     Route::prefix('datatables')->name('datatables.')->group(function() {
         Route::post('{type}', 'DatatableController')->name('getUsers');
     });
-    Route::apiResource('users', UserController::class);
 });
 
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
