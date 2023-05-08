@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,10 +30,18 @@ class StartSeeder extends Seeder
             'guard_name' => 'api'
         ]);
 
+        Country::create([
+            "name" => "México",
+            "dollar_change" => 17.88,
+            "tax" => 8.23,
+            "currency_type" => "MXN"
+        ]);
+
         $users = collect([
             [
                 'name' => 'Fernando',
                 'surnames' => 'Bautista',
+                'country_id' => 1,
                 'email' => 'fernandobautista@prodooh.com',
                 'payload' => [
                     "language" => 'es'
@@ -41,6 +50,7 @@ class StartSeeder extends Seeder
             [
                 'name' => 'Cristofer',
                 'surnames' => 'Gonzalez',
+                'country_id' => 1,
                 'email' => 'cristoferg@prodooh.com',
                 'payload' => [
                     "language" => 'es'

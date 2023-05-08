@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->foreignId('registry_id')->nullable()->constrained('users');
             $table->foreignId('admin_registry_id')->nullable()->constrained('users');
+            $table->foreignId('country_id')->nullable()->constrained('countries');
             $table->string('name');
             $table->string('surnames');
             $table->string('email')->unique();
