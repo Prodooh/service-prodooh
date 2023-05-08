@@ -14,7 +14,7 @@ class CreateCompanyAction
      */
     public function execute(array $data): Company
     {
-        return Company::create([
+        $country = Company::create([
             'country_id'    =>  $data['country_id'],
             'name'          =>  $data['name'],
             'multiplier'    =>  $data['multiplier'] ?? null,
@@ -30,5 +30,29 @@ class CreateCompanyAction
             'contact_email' =>  $data['contact_email'] ?? null,
             'contact_position' => $data['contact_position'] ?? null
         ]);
+
+        if (isset($data['countries']) && count($data['countries'])) {
+            self::processCountries($country, $data['countries']);
+        }
+
+        return $country;
+    }
+
+    // ******************
+    //  Static Methods
+    // ******************
+
+    private static function processCountries(Company $company, $countries): void
+    {
+        $arr = [];
+
+        foreach ($countries as $country) {
+            $arr[$country['country_id']] = [
+                'discount' => $country['discount'],
+                'increase' => $country['increase']
+            ];
+        }
+
+        $company->countries()->attach($arr);
     }
 }
