@@ -19,7 +19,7 @@ class UserController extends BaseController
     public function update(UserRequest $request, User $user): JsonResponse
     {
         $this->authorize($user);
-        $user->update($request->except('image','role'));
+        $user->update((array)collect($request->validated)->except('image', 'role'));
         return $this->successMessage();
     }
 
@@ -46,7 +46,7 @@ class UserController extends BaseController
     }
 
     public function store(UserRequest $request){
-        $user = User::create($request->except('image','role'));
+        $user = User::create((array)collect($request->validated)->except('image', 'role'));
         if ($request['image']) {
             $user->image()->create(["url" => $request['image']]);
         }
