@@ -7,7 +7,6 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Yajra\DataTables\DataTables;
 
 class UserController extends BaseController
 {
@@ -46,7 +45,10 @@ class UserController extends BaseController
         return $this->successMessage();
     }
 
-    public function store(){
-
+    public function store(UserRequest $request){
+        $user = User::create($request->except('image','role'));
+        if ($request['image']) {
+            $user->image()->create(["url" => $request['image']]);
+        }
     }
 }
