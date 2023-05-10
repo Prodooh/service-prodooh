@@ -58,6 +58,10 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
     });
 });
 
+Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads.')->group(function() {
+    Route::post('{type}', 'ImageController')->name('uploadFiles');
+});
+
 Route::apiResource('users', UserController::class);
 
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
