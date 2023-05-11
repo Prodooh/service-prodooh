@@ -32,7 +32,7 @@ class ImageController extends BaseController
         if (!in_array($type, $this->types)) {
             return $this->errorResponse(__('messages.errors.type_not_found'));
         }
-        Storage::disk($type)->putFileAs('', $request->file, $request->name);
+        Storage::disk($type)->putFileAs($request->company_id ? '/' . $request->company_id : '' , $request->file, $request->name);
         return $this->successMessage();
     }
 }
