@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('registry_id')->nullable()->constrained('users');
             $table->foreignId('admin_registry_id')->nullable()->constrained('users');
             $table->foreignId('country_id')->nullable()->constrained('countries');
+            $table->foreignId('company_id')->nullable()->constrained('companies');
             $table->string('name');
             $table->string('surnames');
             $table->string('email')->unique();

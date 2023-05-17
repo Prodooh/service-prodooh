@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,23 +31,35 @@ class StartSeeder extends Seeder
             'guard_name' => 'api'
         ]);
 
+        $company = Company::create([
+            'country_id' => 1,
+            'name' => "prodooh",
+        ]);
+
+        $company->images()->create([
+            "url" => 'prodooh.jph',
+            "image_type" => 'principal'
+        ]);
+
         $users = collect([
             [
+                'country_id' => 1,
+                'company_id' => 1,
                 'name' => 'Fernando',
                 'surnames' => 'Bautista',
-                'country_id' => 1,
                 'email' => 'fernandobautista@prodooh.com',
                 'payload' => [
-                    "language" => 'es'
+                    "lang" => 'es'
                 ]
             ],
             [
+                'country_id' => 1,
+                'company_id' => 1,
                 'name' => 'Cristofer',
                 'surnames' => 'Gonzalez',
-                'country_id' => 1,
                 'email' => 'cristoferg@prodooh.com',
                 'payload' => [
-                    "language" => 'es'
+                    "lang" => 'es'
                 ]
             ],
         ]);
@@ -54,6 +67,9 @@ class StartSeeder extends Seeder
         $users->map(function ($user) {
             $u = User::create($user);
             $u->syncRoles('superadministrator');
+            $u->image()->create([
+                "url" => 'user.png'
+            ]);
         });
     }
 }

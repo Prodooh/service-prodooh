@@ -20,7 +20,14 @@ class AuthController extends AccessTokenController
     {
         try {
             $token = collect(json_decode(parent::issueToken($request)->getContent(), true));
-            $user = User::whereEmail(request('username'))->with('roles')->first();
+            $user = User::whereEmail(request('username'))
+                        ->with([
+                            'roles:id,name',
+                            'image',
+                            'company:id,name' => [
+                                'images'
+                            ]
+                        ])->first();
             return $token->merge(['user' => $user]);
         } catch (Exception $exception) {
             Log::error($exception);
