@@ -40,7 +40,7 @@ class ImageController extends BaseController
 
     }
 
-    public function usersImage($request){
+    public static function usersImage($request){
         return $request->file->store('','users');
     }
 }
