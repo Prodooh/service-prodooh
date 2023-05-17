@@ -19,10 +19,6 @@ class StartSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            CountriesSeeder::class
-        ]);
-
         Artisan::call('passport:install');
 
         DB::table('oauth_clients')->where('id', 2)->update([
