@@ -57,6 +57,11 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->grou
     });
 });
 
+/* UPLOADS */
+Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads.')->group(function() {
+    Route::post('{type}', 'ImageController')->name('uploadFiles');
+});
+
 /* COUNTRIES */
 Route::namespace('App\Http\Controllers\Country')->group(function() {
     Route::prefix('countries')->name('countries.')->group(function() {
