@@ -14,7 +14,7 @@ class CreateCompanyAction
      */
     public function execute(array $data): Company
     {
-        $country = Company::create([
+        $company = Company::create([
             'country_id'    =>  $data['country_id'],
             'name'          =>  $data['name'],
             'multiplier'    =>  $data['multiplier'] ?? null,
@@ -28,14 +28,21 @@ class CreateCompanyAction
             'contact_name'  =>  $data['contact_name'] ?? null,
             'contact_phone' =>  $data['contact_phone'] ?? null,
             'contact_email' =>  $data['contact_email'] ?? null,
-            'contact_position' => $data['contact_position'] ?? null
+            'contact_position' => $data['contact_position'] ?? null,
         ]);
 
         if (isset($data['countries']) && count($data['countries'])) {
-            self::processCountries($country, $data['countries']);
+            self::processCountries($company, $data['countries']);
         }
 
-        return $country;
+        if (isset($data['image'])) {
+            $company->images()->create([
+                "url" => $data['image'],
+                "image_type" => $data['image_type']
+            ]);
+        }
+
+        return $company;
     }
 
     // ******************

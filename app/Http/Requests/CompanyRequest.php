@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CompanyImageEnum;
 use App\Enums\CompanyRoleEnum;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -52,7 +53,16 @@ class CompanyRequest extends FormRequest
             'contact_name'      => ['string', 'min:1', 'nullable'],
             'contact_phone'     => ['string', 'min:1', 'nullable'],
             'contact_email'     => ['string', 'email', 'nullable'],
-            'contact_position'  => ['string', 'min:1', 'nullable']
+            'contact_position'  => ['string', 'min:1', 'nullable'],
+            'image'             => ['string', 'nullable'],
+            'image_type'        => [
+                'string',
+                'nullable',
+                new In([
+                    CompanyImageEnum::Principal->value,
+                    CompanyImageEnum::Secondary->value,
+                ])
+            ]
         ];
     }
 }

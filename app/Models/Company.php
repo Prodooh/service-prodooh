@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -13,6 +15,8 @@ class Company extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    protected $hidden = ['imageable_type'];
 
     /**
      * @return void
@@ -28,9 +32,19 @@ class Company extends Model
     // ************
     //   Eloquent
     // ************
+
+    /**
+     * @return MorphMany
+     */
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
     /**
      * Get all countries for the company.
      */
+
     public function countries(): BelongsToMany
     {
         return $this->belongsToMany(Country::class)->withTimestamps();
