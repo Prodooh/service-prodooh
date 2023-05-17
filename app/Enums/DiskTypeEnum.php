@@ -2,5 +2,5 @@
 namespace App\Enums;
 
 enum DiskTypeEnum: string {
-    case users = 'users';
+    case Users = 'users';
 }

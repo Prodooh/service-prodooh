@@ -24,8 +24,8 @@ class ImageRequest extends FormRequest
     {
         return [
             "file" => ['required','image'],
-            "name" => ['required', 'string'],
-            "company_id" => ['number', 'exists:companies,id']
+            "name" => ['string', 'nullable'],
+            "company_id" => ['number', 'exists:companies,id', 'nullable']
         ];
     }
 }

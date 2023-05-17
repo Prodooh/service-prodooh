@@ -7,6 +7,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\ImageRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends BaseController
@@ -24,15 +25,22 @@ class ImageController extends BaseController
      * Handle the incoming request.
      *
      * @param $type
+     * @param ImageRequest $request
      * @return JsonResponse
-     * @throws Exception
      */
-    public function __invoke($type, ImageRequest $request): JsonResponse
+    public function __invoke($type, ImageRequest $request):string
     {
         if (!in_array($type, $this->types)) {
             return $this->errorResponse(__('messages.errors.type_not_found'));
         }
-        Storage::disk($type)->putFileAs($request->company_id ? '/' . $request->company_id : '' , $request->file, $request->name);
-        return $this->successMessage();
+        return match ($type) {
+            'users' => self::usersImage($request),
+            default => $this->successMessage()
+        };
+
+    }
+
+    public function usersImage($request){
+        return $request->file->store('','users');
     }
 }
