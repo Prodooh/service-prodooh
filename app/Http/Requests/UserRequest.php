@@ -24,13 +24,13 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-//          'company_id'    =>   ['integer', 'exists:companies, id'],
-//          'country_id'    =>   ['required', 'integer', 'exists:countries, id'],
-            'name'          =>   ['required', 'string', 'max:255'],
-            'surnames'      =>   ['required', 'string', 'max:255'],
-            'image'         =>   ['required','string'],
-            'email'         =>   ['required', 'string', 'email', 'max:255', isset($this->user->id) ? 'unique:users,email,'. $this->user->id : 'unique:users'],
-            'role'          =>   ['required', 'integer', 'exists:roles,id']
+            'company_id' => ['integer', 'exists:companies, id'],
+            'country_id' => ['required', 'integer', 'exists:countries, id'],
+            'name' => ['required', 'string', 'max:255'],
+            'surnames' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:255', isset($this->user->id) ? 'unique:users,email,' . $this->user->id : 'unique:users'],
+            'role' => ['required', 'integer', 'exists:roles,id']
         ];
     }
 }

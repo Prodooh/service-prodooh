@@ -37,8 +37,9 @@ Route::namespace('App\Http\Controllers\User')->group(function() {
     Route::prefix('users')->name('users.')->group(function() {
         Route::post('preferences', 'UserController@updatePreferences');
         Route::post('/', 'UserController@getData')->name('getData');
+        Route::get('/{user:uuid}', 'UserController@show')->name('getUser');
     });
-    Route::apiResource('users', 'UserController');
+    Route::apiResource('users', 'UserController')->except('show');
 });
 
 /* COMPANIES */
@@ -47,7 +48,7 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(
 
     });
     Route::apiResource('companies', 'CompanyController')
-        ->only(['store']);
+        ->only(['store','index']);
 });
 
 /* DATATABLES */
@@ -63,7 +64,7 @@ Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads
 });
 
 /* COUNTRIES */
-Route::namespace('App\Http\Controllers\Country')->group(function() {
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Country')->group(function() {
     Route::prefix('countries')->name('countries.')->group(function() {
         Route::post('/search', 'CountryController@search')->name('search.country');
     });

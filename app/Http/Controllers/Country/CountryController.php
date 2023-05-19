@@ -24,6 +24,10 @@ class CountryController extends Controller
         return Country::create($request->all());
     }
 
+    public function index(){
+        return Country::get();
+    }
+
     /**
      * Display the specified resource.
      */
