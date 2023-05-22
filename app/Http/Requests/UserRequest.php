@@ -24,8 +24,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_id' => ['integer', 'exists:companies, id'],
-            'country_id' => ['required', 'integer', 'exists:countries, id'],
+            'company_id' => ['integer', 'exists:companies,id'],
+            'country_id' => ['required', 'integer', 'exists:countries,id'],
             'name' => ['required', 'string', 'max:255'],
             'surnames' => ['required', 'string', 'max:255'],
             'image' => ['required', 'string'],

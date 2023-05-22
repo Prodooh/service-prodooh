@@ -47,17 +47,9 @@ class UserController extends BaseController
         return $this->successMessage();
     }
 
-    public function store(UserRequest $request){
-        if(!$request->company_id){
-            $domain = explode('@',$request->email)[1];
-            $company = Company::where('name', 'like', '%' . strtolower(explode('.',$domain)[0]) . '%')->first();
-            if($company){
-                $request->company_id = $company->id;
-            }else{
-                $action =  new CreateCompanyAction();
-                $action->execute(["name"=> explode('.',$domain)[0],"country_id"=>1]);
-            }
-        }
+    public function store(UserRequest $request, CreateCompanyAction $action)
+    {
+        $request->company_id ?? $this->getCompanyByDomain($request, $action);
         $user = User::create(collect($request->validated())->except('image', 'role')->toArray());
         if ($request['image']) {
             $user->image()->create(["url" => $request['image']]);
@@ -66,6 +58,18 @@ class UserController extends BaseController
 
     public function show(User $user)
     {
-        return $user->with(['roles:id','image'])->first();
+        return $user->with(['roles:id', 'image'])->first();
+    }
+
+    private function getCompanyByDomain($request, CreateCompanyAction $action)
+    {
+        $domain = explode('@', $request->email)[1];
+        $nameCompany = explode('.', $domain)[0];
+        $company = Company::where('name', strtolower($nameCompany))->get();
+
+        if (!$company) {
+            return $company->id;
+        }
+        return $action->execute(["name" => $nameCompany, "country_id" => $request->country_id])->id;
     }
 }
