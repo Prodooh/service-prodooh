@@ -28,7 +28,7 @@ class CompanyRequest extends FormRequest
         return [
             'country_id'        =>  ['required', 'integer'],
             'name'              =>  ['required', 'string', 'max:255'],
-            'multiplier'        =>  ['double', 'nullable'],
+            'multiplier'        =>  ['numeric', 'nullable'],
             'countries'         =>  ['array', 'nullable'],
             'countries.*.country_id' => ['required', 'numeric'],
             'countries.*.discount'   => ['required', 'numeric'],
@@ -55,9 +55,11 @@ class CompanyRequest extends FormRequest
             'contact_email'     => ['string', 'email', 'nullable'],
             'contact_position'  => ['string', 'min:1', 'nullable'],
             'image'             => ['string', 'nullable'],
-            'image_type'        => [
+            'images'            => ['array', 'nullable'],
+            'images.*.name'     => ['required', 'string'],
+            'images.*.type'     => [
+                'required',
                 'string',
-                'nullable',
                 new In([
                     CompanyImageEnum::Principal->value,
                     CompanyImageEnum::Secondary->value,

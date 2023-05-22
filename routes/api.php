@@ -47,7 +47,9 @@ Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(
 
     });
     Route::apiResource('companies', 'CompanyController')
-        ->only(['store']);
+        ->only([
+            'store', 'show', 'update'
+        ]);
 });
 
 /* DATATABLES */

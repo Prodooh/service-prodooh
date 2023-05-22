@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 
 class BaseController extends Controller
@@ -38,11 +39,11 @@ class BaseController extends Controller
 	}
 
     /**
-     * @param $instance
+     * @param Model $instance
      * @param int $code
      * @return JsonResponse
      */
-    protected function showOne($instance, int $code = 200): JsonResponse
+    protected function showOne(Model $instance, int $code = 200): JsonResponse
     {
 		return $this->successResponse($instance, $code);
 	}

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -17,6 +18,10 @@ class Company extends Model
     protected $guarded = [];
 
     protected $hidden = ['imageable_type'];
+
+    protected $casts = [
+        'multiplier' => 'double'
+    ];
 
     /**
      * @return void
@@ -42,9 +47,16 @@ class Company extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
      * Get all countries for the company.
      */
-
     public function countries(): BelongsToMany
     {
         return $this->belongsToMany(Country::class)->withTimestamps();
