@@ -14,6 +14,10 @@ class Country extends Model
 
     protected $guarded= [];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     /**
      * @return void
      */

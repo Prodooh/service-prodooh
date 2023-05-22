@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 /* AUTH */
-Route::namespace('App\Http\Controllers\Auth')->group(function() {
-    Route::prefix('auth')->name('auth.')->group(function() {
+Route::namespace('App\Http\Controllers\Auth')->group(function () {
+    Route::prefix('auth')->name('auth.')->group(function () {
         Route::post('token', 'AuthController@token');
         Route::post('password/send-link', 'ResetPasswordController@sendResetLinkEmail');
         Route::middleware('token_reset_password_validate')->post('password/reset', 'ResetPasswordController@resetPassword');
@@ -33,8 +33,8 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 });
 
 /* USERS */
-Route::namespace('App\Http\Controllers\User')->group(function() {
-    Route::prefix('users')->name('users.')->group(function() {
+Route::namespace('App\Http\Controllers\User')->group(function () {
+    Route::prefix('users')->name('users.')->group(function () {
         Route::post('preferences', 'UserController@updatePreferences');
         Route::post('/', 'UserController@getData')->name('getData');
         Route::get('/{user:uuid}', 'UserController@show')->name('getUser');
@@ -43,29 +43,31 @@ Route::namespace('App\Http\Controllers\User')->group(function() {
 });
 
 /* COMPANIES */
-Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(function() {
-    Route::prefix('companies')->name('companies.')->group(function() {
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Company')->group(function () {
+    Route::prefix('companies')->name('companies.')->group(function () {
 
     });
     Route::apiResource('companies', 'CompanyController')
-        ->only(['store','index']);
+        ->only([
+            'store', 'show', 'update'
+        ]);
 });
 
 /* DATATABLES */
-Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->group(function() {
-    Route::prefix('datatables')->name('datatables.')->group(function() {
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Datatable')->group(function () {
+    Route::prefix('datatables')->name('datatables.')->group(function () {
         Route::post('{type}', 'DatatableController')->name('getUsers');
     });
 });
 
 /* UPLOADS */
-Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads.')->group(function() {
+Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads.')->group(function () {
     Route::post('{type}', 'ImageController')->name('uploadFiles');
 });
 
 /* COUNTRIES */
-Route::middleware('auth:api')->namespace('App\Http\Controllers\Country')->group(function() {
-    Route::prefix('countries')->name('countries.')->group(function() {
+Route::middleware('auth:api')->namespace('App\Http\Controllers\Country')->group(function () {
+    Route::prefix('countries')->name('countries.')->group(function () {
         Route::post('/search', 'CountryController@search')->name('search.country');
     });
     Route::apiResource('countries', 'CountryController');

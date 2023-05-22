@@ -31,35 +31,6 @@ class CreateCompanyAction
             'contact_position' => $data['contact_position'] ?? null,
         ]);
 
-        if (isset($data['countries']) && count($data['countries'])) {
-            self::processCountries($company, $data['countries']);
-        }
-
-        if (isset($data['image'])) {
-            $company->images()->create([
-                "url" => $data['image'],
-                "image_type" => $data['image_type']
-            ]);
-        }
-
         return $company;
-    }
-
-    // ******************
-    //  Static Methods
-    // ******************
-
-    private static function processCountries(Company $company, $countries): void
-    {
-        $arr = [];
-
-        foreach ($countries as $country) {
-            $arr[$country['country_id']] = [
-                'discount' => $country['discount'],
-                'increase' => $country['increase']
-            ];
-        }
-
-        $company->countries()->attach($arr);
     }
 }
