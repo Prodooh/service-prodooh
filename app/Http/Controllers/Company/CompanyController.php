@@ -21,7 +21,11 @@ class CompanyController extends BaseController
         ProcessCountriesAction $countriesAction
     ): JsonResponse
     {
-        $company = $companyAction->execute($request->validated());
+        $company = $companyAction->execute(
+            collect($request->validated())
+                ->except('image', 'countries')
+                ->toArray()
+        );
         $countriesAction->execute($company, $request->countries);
 
         $this->createImage($request, $company);

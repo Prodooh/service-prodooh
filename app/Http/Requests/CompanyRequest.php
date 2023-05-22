@@ -40,7 +40,7 @@ class CompanyRequest extends FormRequest
             'business_name'    => ['string', 'max:255', 'nullable'],
             'billing_email'     => ['string', 'email', 'max:255', 'nullable'],
             'role'              => [
-                'required',
+                'nullable',
                 'string',
                 'max:50',
                 new In([
