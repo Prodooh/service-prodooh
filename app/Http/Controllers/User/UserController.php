@@ -49,8 +49,8 @@ class UserController extends BaseController
 
     public function store(UserRequest $request, CreateCompanyAction $action)
     {
-        $request->company_id ?? $this->getCompanyByDomain($request, $action);
-        $user = User::create(collect($request->validated())->except('image', 'role')->toArray());
+        $request['company_id'] = $request->company_id ?? $this->getCompanyByDomain($request, $action);
+        $user = User::create($request->except('image', 'role'));
         if ($request['image']) {
             $user->image()->create(["url" => $request['image']]);
         }
@@ -66,9 +66,8 @@ class UserController extends BaseController
         $domain = explode('@', $request->email)[1];
         $nameCompany = explode('.', $domain)[0];
         $company = Company::where('name', strtolower($nameCompany))->get();
-
-        if (!$company) {
-            return $company->id;
+        if ($company->isNotEmpty()) {
+            return $company[0]['id'];
         }
         return $action->execute(["name" => $nameCompany, "country_id" => $request->country_id])->id;
     }
