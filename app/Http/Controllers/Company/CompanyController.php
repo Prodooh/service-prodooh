@@ -23,9 +23,10 @@ class CompanyController extends BaseController
     {
         $company = $companyAction->execute(
             collect($request->validated())
-                ->except('image', 'countries')
+                ->except('images', 'countries')
                 ->toArray()
         );
+
         $countriesAction->execute($company, $request->countries);
 
         $this->createImage($request, $company);
@@ -52,7 +53,7 @@ class CompanyController extends BaseController
     {
         $company->update(
             collect($request->validated())
-                ->except('image', 'countries')
+                ->except('images', 'countries')
                 ->toArray()
         );
 
@@ -77,20 +78,24 @@ class CompanyController extends BaseController
     //  Private Methods
     // ******************
 
-    private function createImage(Request $request, Company $company)
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @return void
+     */
+    private function createImage(Request $request, Company $company): void
     {
-        if ($request->has('image_principal')) {
-            $company->images()->create([
-                "url" => $request->image,
-                "image_type" => 'principal'
-            ]);
+        if ($company->images()->count()) {
+            $company->images()->delete();
         }
 
-        if ($request->has('image_secondary')) {
-            $company->images()->create([
-                "url" => $request->image,
-                "image_type" => 'secondary'
-            ]);
+        if ($request->has('images')) {
+            foreach ($request->images as $image) {
+                $company->images()->create([
+                    "url" => $image['name'],
+                    "image_type" => $image['type']
+                ]);
+            }
         }
     }
 }

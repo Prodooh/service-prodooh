@@ -14,8 +14,6 @@ class CreateCompanyAction
      */
     public function execute(array $data): Company
     {
-        $company = Company::create($data);
-
-        return $company;
+        return Company::create($data);
     }
 }

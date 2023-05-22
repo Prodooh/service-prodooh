@@ -54,7 +54,6 @@ class CompanyRequest extends FormRequest
             'contact_phone'     => ['string', 'min:1', 'nullable'],
             'contact_email'     => ['string', 'email', 'nullable'],
             'contact_position'  => ['string', 'min:1', 'nullable'],
-            'image'             => ['string', 'nullable'],
             'images'            => ['array', 'nullable'],
             'images.*.name'     => ['required', 'string'],
             'images.*.type'     => [
