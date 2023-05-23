@@ -25,7 +25,6 @@ class  DatatableFactory
         }
 
         if (auth()->user()->hasRole('salesmanager')) {
-            dump("aqui si es");
             return DB::table('users')->where('admin_registry_id', auth()->user()->id);
         }
 
