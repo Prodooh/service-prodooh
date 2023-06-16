@@ -64,6 +64,9 @@ class CountryController extends BaseController
      */
     public function destroy(Country $country)
     {
+        if($country->scopeHasAnyRelation()){
+            return $this->errorResponse('Forbidden action',403);
+        }
         $country->delete();
         return $this->showMessageSuccess();
     }
