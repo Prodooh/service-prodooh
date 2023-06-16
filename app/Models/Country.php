@@ -28,4 +28,20 @@ class Country extends Model
             $model->uuid = Str::uuid()->toString();
         });
     }
+
+    /**
+     * @return bool
+     */
+    public function scopeHasAnyRelation(): bool
+    {
+        $relations = $this->getRelations();
+
+        foreach ($relations as $relation) {
+            if ($relation->count() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -69,6 +69,7 @@ Route::prefix('uploads')->namespace('App\Http\Controllers\Image')->name('uploads
 Route::middleware('auth:api')->namespace('App\Http\Controllers\Country')->group(function () {
     Route::prefix('countries')->name('countries.')->group(function () {
         Route::post('/search', 'CountryController@search')->name('search.country');
+        Route::post('states', 'CountryController@getStatesCountry')->name('states');
     });
     Route::apiResource('countries', 'CountryController');
 });

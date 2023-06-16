@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Country;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StatesRequest;
 use App\Models\Country;
+use App\Models\Screen;
+use App\Models\State;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class CountryController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +26,17 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        return Country::create($request->all());
+        Country::create($request->all());
+        return $this->showMessageSuccess();
     }
 
     public function index(){
-        return Country::get();
+        if (count(auth()->user()->company->countries) > 0) {
+            $countries = auth()->user()->company->countries;
+        } else {
+            $countries = Country::orderBy( 'name', 'asc' )->get();
+        }
+        return $this->showAll($countries);
     }
 
     /**
@@ -33,7 +44,7 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
-        return $country;
+        return $this->showOne($country);
     }
 
 
@@ -42,7 +53,10 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
-        return $country->update($request->all());
+        $country->update($request->only(
+            'name', 'dollar_change', 'tax', 'type_of_currency'
+        ));
+        return $this->showMessageSuccess();
     }
 
     /**
@@ -50,6 +64,18 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        return $country->delete();
+        $country->delete();
+        return $this->showMessageSuccess();
     }
+
+    /**
+     * @param StatesRequest $request
+     * @return JsonResponse
+     */
+    public function getStatesCountry(StatesRequest $request): JsonResponse
+    {
+        $states = State::whereIn('country_id', $request->countries_ids)->get();
+        return $this->showAll($states);
+    }
+
 }
